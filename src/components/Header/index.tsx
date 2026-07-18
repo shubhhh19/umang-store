@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
+import { siteConfig } from "@/lib/site";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,10 +65,11 @@ const Header = () => {
           <div className="xl:w-auto flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
             <Link className="flex-shrink-0" href="/">
               <Image
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={219}
-                height={36}
+                src={siteConfig.logo}
+                alt={`${siteConfig.name} logo`}
+                width={140}
+                height={40}
+                className="h-8 sm:h-10 w-auto object-contain"
               />
             </Link>
 
