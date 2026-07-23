@@ -11,6 +11,7 @@ import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
 import { siteConfig } from "@/lib/site";
 import { formatInr } from "@/lib/format";
+import CategoryBar from "../Home/CategoryBar";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -349,6 +350,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <CategoryBar />
     </header>
   );
 };

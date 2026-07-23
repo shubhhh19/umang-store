@@ -10,7 +10,6 @@ const Home = ({ products }: { products: Product[] }) => {
   return (
     <main>
       <Hero />
-      <CategoryBar />
       <Categories />
       <NewArrival products={products} />
       <BestSeller products={products} />

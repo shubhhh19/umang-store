@@ -13,24 +13,20 @@ const categories = [
 
 interface CategoryBarProps {
   activeCategory?: string;
-  onSelectCategory?: (slug: string) => void;
 }
 
-const CategoryBarContent: React.FC<CategoryBarProps> = ({
-  activeCategory,
-  onSelectCategory,
-}) => {
+const CategoryBarContent: React.FC<CategoryBarProps> = ({ activeCategory }) => {
   const searchParams = useSearchParams();
   const currentCategory =
     activeCategory || searchParams?.get("category") || "all";
 
   return (
-    <div className="w-full bg-white border-y border-gray-2 shadow-xs py-4 my-6">
-      <div className="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
-        <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar scroll-smooth py-1">
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-2 text-custom-sm font-semibold text-dark-4 uppercase tracking-wider pr-2 border-r border-gray-3">
-              Categories:
+    <div className="w-full bg-[#f8f9fc] border-t border-gray-3 py-2">
+      <div className="max-w-[1170px] mx-auto px-4 sm:px-7.5 xl:px-0">
+        <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar py-0.5">
+          <div className="flex items-center gap-2.5">
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-2xs font-bold text-dark-4 uppercase tracking-wider pr-3 border-r border-gray-3">
+              Categories
             </span>
 
             {categories.map((cat) => {
@@ -38,31 +34,14 @@ const CategoryBarContent: React.FC<CategoryBarProps> = ({
               const targetHref =
                 cat.slug === "all" ? "/shop" : `/shop?category=${cat.slug}`;
 
-              if (onSelectCategory) {
-                return (
-                  <button
-                    key={cat.slug}
-                    onClick={() => onSelectCategory(cat.slug)}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-custom-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                      isActive
-                        ? "bg-blue text-white shadow-md shadow-blue/20 scale-[1.02]"
-                        : "bg-gray-1 text-dark hover:bg-gray-2 hover:text-blue"
-                    }`}
-                  >
-                    <span>{cat.icon}</span>
-                    <span>{cat.name}</span>
-                  </button>
-                );
-              }
-
               return (
                 <Link
                   key={cat.slug}
                   href={targetHref}
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-custom-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                     isActive
-                      ? "bg-blue text-white shadow-md shadow-blue/20 scale-[1.02]"
-                      : "bg-gray-1 text-dark hover:bg-gray-2 hover:text-blue"
+                      ? "bg-blue text-white shadow-xs"
+                      : "bg-white text-dark hover:bg-gray-1 hover:text-blue border border-gray-3"
                   }`}
                 >
                   <span>{cat.icon}</span>
@@ -74,12 +53,12 @@ const CategoryBarContent: React.FC<CategoryBarProps> = ({
 
           <Link
             href="/shop"
-            className="hidden md:inline-flex items-center gap-1.5 text-custom-sm font-semibold text-blue hover:text-blue-dark transition-colors duration-200 whitespace-nowrap"
+            className="hidden md:inline-flex items-center gap-1 text-xs font-semibold text-blue hover:text-blue-dark transition-colors duration-200 whitespace-nowrap"
           >
-            <span>Explore All</span>
+            <span>View All</span>
             <svg
-              width="16"
-              height="16"
+              width="14"
+              height="14"
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +80,7 @@ const CategoryBarContent: React.FC<CategoryBarProps> = ({
 
 const CategoryBar: React.FC<CategoryBarProps> = (props) => {
   return (
-    <Suspense fallback={<div className="h-16 my-6 bg-white border-y border-gray-2" />}>
+    <Suspense fallback={<div className="h-10 bg-[#f8f9fc] border-t border-gray-3" />}>
       <CategoryBarContent {...props} />
     </Suspense>
   );
