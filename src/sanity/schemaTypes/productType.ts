@@ -17,9 +17,8 @@ export const productType = defineType({
       name: 'slug',
       title: 'Slug (URL)',
       type: 'slug',
-      description: 'Auto-generated from title. Used in the product URL.',
+      description: 'Enter custom slug used in the product URL.',
       options: {
-        source: 'title',
         maxLength: 96,
       },
       validation: (rule) => rule.required(),
