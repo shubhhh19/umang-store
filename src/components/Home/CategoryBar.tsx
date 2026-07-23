@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const categories = [
-  { name: "All Products", slug: "all", icon: "✨" },
-  { name: "Lehngas", slug: "lehngas", icon: "👗" },
-  { name: "Readymade Suits", slug: "readymade-suits", icon: "👘" },
-  { name: "Fabric Suits", slug: "fabric-suits", icon: "🧵" },
+  { name: "All Products", slug: "all" },
+  { name: "Lehngas", slug: "lehngas" },
+  { name: "Readymade Suits", slug: "readymade-suits" },
+  { name: "Fabric Suits", slug: "fabric-suits" },
 ];
 
 interface CategoryBarProps {
@@ -38,13 +38,12 @@ const CategoryBarContent: React.FC<CategoryBarProps> = ({ activeCategory }) => {
                 <Link
                   key={cat.slug}
                   href={targetHref}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 whitespace-nowrap ${
+                  className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 whitespace-nowrap ${
                     isActive
                       ? "bg-blue text-white shadow-xs"
                       : "bg-white text-dark hover:bg-gray-1 hover:text-blue border border-gray-3"
                   }`}
                 >
-                  <span>{cat.icon}</span>
                   <span>{cat.name}</span>
                 </Link>
               );
