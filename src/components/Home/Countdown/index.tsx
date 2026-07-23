@@ -8,10 +8,23 @@ const CounDown = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const deadline = "December, 31, 2024";
+  // Set the deadline to 30 days from now dynamically so it's always running
+  const [deadline] = useState(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 15); // 15 days countdown
+    return date.toISOString();
+  });
 
   const getTime = () => {
     const time = Date.parse(deadline) - Date.now();
+
+    if (time < 0) {
+      setDays(0);
+      setHours(0);
+      setMinutes(0);
+      setSeconds(0);
+      return;
+    }
 
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
@@ -20,11 +33,10 @@ const CounDown = () => {
   };
 
   useEffect(() => {
-    // @ts-ignore
-    const interval = setInterval(() => getTime(deadline), 1000);
-
+    getTime();
+    const interval = setInterval(() => getTime(), 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [deadline]);
 
   return (
     <section className="overflow-hidden py-20">
@@ -36,25 +48,17 @@ const CounDown = () => {
             </span>
 
             <h2 className="font-bold text-dark text-xl lg:text-heading-4 xl:text-heading-3 mb-3">
-              Enhance Your Music Experience
+              Limited-Time Festive Offer
             </h2>
 
-            <p>The Havit H206d is a wired PC headphone.</p>
+            <p>Grab flat 20% discount on our entire Ethnic & Indo-Western Collections. Ends soon!</p>
 
             {/* <!-- Countdown timer --> */}
-            <div
-              className="flex flex-wrap gap-6 mt-6"
-              x-data="timer()"
-              x-init="countdown()"
-            >
+            <div className="flex flex-wrap gap-6 mt-6">
               {/* <!-- timer day --> */}
               <div>
-                <span
-                  className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2"
-                  x-text="days"
-                >
-                  {" "}
-                  {days < 10 ? "0" + days : days}{" "}
+                <span className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2">
+                  {days < 10 ? "0" + days : days}
                 </span>
                 <span className="block text-custom-sm text-dark text-center">
                   Days
@@ -63,12 +67,8 @@ const CounDown = () => {
 
               {/* <!-- timer hours --> */}
               <div>
-                <span
-                  className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2"
-                  x-text="hours"
-                >
-                  {" "}
-                  {hours < 10 ? "0" + hours : hours}{" "}
+                <span className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2">
+                  {hours < 10 ? "0" + hours : hours}
                 </span>
                 <span className="block text-custom-sm text-dark text-center">
                   Hours
@@ -77,11 +77,8 @@ const CounDown = () => {
 
               {/* <!-- timer minutes --> */}
               <div>
-                <span
-                  className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2"
-                  x-text="minutes"
-                >
-                  {minutes < 10 ? "0" + minutes : minutes}{" "}
+                <span className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2">
+                  {minutes < 10 ? "0" + minutes : minutes}
                 </span>
                 <span className="block text-custom-sm text-dark text-center">
                   Minutes
@@ -90,11 +87,8 @@ const CounDown = () => {
 
               {/* <!-- timer seconds --> */}
               <div>
-                <span
-                  className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2"
-                  x-text="seconds"
-                >
-                  {seconds < 10 ? "0" + seconds : seconds}{" "}
+                <span className="min-w-[64px] h-14.5 font-semibold text-xl lg:text-3xl text-dark rounded-lg flex items-center justify-center bg-white shadow-2 px-4 mb-2">
+                  {seconds < 10 ? "0" + seconds : seconds}
                 </span>
                 <span className="block text-custom-sm text-dark text-center">
                   Seconds
@@ -104,10 +98,10 @@ const CounDown = () => {
             {/* <!-- Countdown timer ends --> */}
 
             <a
-              href="#"
+              href="/shop"
               className="inline-flex font-medium text-custom-sm text-white bg-blue py-3 px-9.5 rounded-md ease-out duration-200 hover:bg-blue-dark mt-7.5"
             >
-              Check it Out!
+              Shop the Sale
             </a>
           </div>
 

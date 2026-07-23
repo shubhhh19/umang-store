@@ -2,13 +2,12 @@
 import React, { useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 
-import SingleGridItem from "../Shop/SingleGridItem";
-import SingleListItem from "../Shop/SingleListItem";
-import CustomSelect from "../ShopWithSidebar/CustomSelect";
+import SingleGridItem from "./SingleGridItem";
+import SingleListItem from "./SingleListItem";
+import CustomSelect from "./CustomSelect";
+import { Product } from "@/types/product";
 
-import shopData from "../Shop/shopData";
-
-const ShopWithoutSidebar = () => {
+const Shop = ({ products }: { products: Product[] }) => {
   const [productStyle, setProductStyle] = useState("grid");
 
   const options = [
@@ -20,8 +19,8 @@ const ShopWithoutSidebar = () => {
   return (
     <>
       <Breadcrumb
-        title={"Explore All Products"}
-        pages={["shop", "/", "shop without sidebar"]}
+        title={"All Products"}
+        pages={["shop"]}
       />
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -35,7 +34,7 @@ const ShopWithoutSidebar = () => {
                     <CustomSelect options={options} />
 
                     <p>
-                      Showing <span className="text-dark">9 of 50</span>{" "}
+                      Showing <span className="text-dark">{products.length}</span>{" "}
                       Products
                     </p>
                   </div>
@@ -129,11 +128,11 @@ const ShopWithoutSidebar = () => {
                     : "flex flex-col gap-7.5"
                 }`}
               >
-                {shopData.map((item, key) =>
+                {products.map((item) =>
                   productStyle === "grid" ? (
-                    <SingleGridItem item={item} key={key} />
+                    <SingleGridItem item={item} key={item.id} />
                   ) : (
-                    <SingleListItem item={item} key={key} />
+                    <SingleListItem item={item} key={item.id} />
                   )
                 )}
               </div>
@@ -265,4 +264,4 @@ const ShopWithoutSidebar = () => {
   );
 };
 
-export default ShopWithoutSidebar;
+export default Shop;

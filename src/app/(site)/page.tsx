@@ -1,16 +1,18 @@
 import Home from "@/components/Home";
+import { getProducts } from "@/lib/products";
+import { siteConfig } from "@/lib/site";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
+
 export const metadata: Metadata = {
-  title: "NextCommerce | Nextjs E-commerce template",
-  description: "This is Home for NextCommerce Template",
-  // other metadata
+  title: `${siteConfig.name} | Fashion Store`,
+  description: siteConfig.description,
 };
 
-export default function HomePage() {
-  return (
-    <>
-      <Home />
-    </>
-  );
+export default async function HomePage() {
+  const products = await getProducts();
+
+  return <Home products={products} />;
 }

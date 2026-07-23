@@ -31,9 +31,9 @@ const HeroCarousal = () => {
               <Image
                 src={siteConfig.logo}
                 alt={`${siteConfig.name} logo`}
-                width={160}
-                height={48}
-                className="h-10 w-auto object-contain"
+                width={200}
+                height={67}
+                className="h-14 w-auto object-contain"
               />
             </div>
 
@@ -47,7 +47,7 @@ const HeroCarousal = () => {
             </p>
 
             <Link
-              href="/shop-without-sidebar"
+              href="/shop"
               className="inline-flex font-medium text-white text-custom-sm rounded-md bg-dark py-3 px-9 ease-out duration-200 hover:bg-gray-7 mt-10"
             >
               Shop Now
@@ -77,7 +77,7 @@ const HeroCarousal = () => {
             </p>
 
             <Link
-              href="/shop-without-sidebar"
+              href="/shop"
               className="inline-flex font-medium text-white text-custom-sm rounded-md bg-dark py-3 px-9 ease-out duration-200 hover:bg-gray-7 mt-10"
             >
               View Collection

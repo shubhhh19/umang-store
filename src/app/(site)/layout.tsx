@@ -10,11 +10,10 @@ import { CartModalProvider } from "../context/CartSidebarModalContext";
 import { ReduxProvider } from "@/redux/provider";
 import QuickViewModal from "@/components/Common/QuickViewModal";
 import CartSidebarModal from "@/components/Common/CartSidebarModal";
-import { PreviewSliderProvider } from "../context/PreviewSliderContext";
-import PreviewSliderModal from "@/components/Common/PreviewSlider";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
 import PreLoader from "@/components/Common/PreLoader";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,
@@ -37,19 +36,16 @@ export default function RootLayout({
             <ReduxProvider>
               <CartModalProvider>
                 <ModalProvider>
-                  <PreviewSliderProvider>
-                    <Header />
-                    {children}
-
-                    <QuickViewModal />
-                    <CartSidebarModal />
-                    <PreviewSliderModal />
-                  </PreviewSliderProvider>
+                  <Header />
+                  {children}
+                  <QuickViewModal />
+                  <CartSidebarModal />
                 </ModalProvider>
               </CartModalProvider>
             </ReduxProvider>
             <ScrollToTop />
             <Footer />
+            <Toaster position="top-right" />
           </>
         )}
       </body>
