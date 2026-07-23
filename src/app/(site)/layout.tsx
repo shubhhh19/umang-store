@@ -13,6 +13,7 @@ import CartSidebarModal from "@/components/Common/CartSidebarModal";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
 import PreLoader from "@/components/Common/PreLoader";
+import AuthProvider from "../context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
@@ -33,19 +34,21 @@ export default function RootLayout({
           <PreLoader />
         ) : (
           <>
-            <ReduxProvider>
-              <CartModalProvider>
-                <ModalProvider>
-                  <Header />
-                  {children}
-                  <QuickViewModal />
-                  <CartSidebarModal />
-                </ModalProvider>
-              </CartModalProvider>
-            </ReduxProvider>
-            <ScrollToTop />
-            <Footer />
-            <Toaster position="top-right" />
+            <AuthProvider>
+              <ReduxProvider>
+                <CartModalProvider>
+                  <ModalProvider>
+                    <Header />
+                    {children}
+                    <QuickViewModal />
+                    <CartSidebarModal />
+                  </ModalProvider>
+                </CartModalProvider>
+              </ReduxProvider>
+              <ScrollToTop />
+              <Footer />
+              <Toaster position="top-right" />
+            </AuthProvider>
           </>
         )}
       </body>
