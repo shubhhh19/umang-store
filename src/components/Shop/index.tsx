@@ -1,14 +1,27 @@
 "use client";
 import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../Common/Breadcrumb";
 
 import SingleGridItem from "./SingleGridItem";
 import SingleListItem from "./SingleListItem";
 import CustomSelect from "./CustomSelect";
+import CategoryBar from "../Home/CategoryBar";
 import { Product } from "@/types/product";
 
 const Shop = ({ products }: { products: Product[] }) => {
   const [productStyle, setProductStyle] = useState("grid");
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams?.get("category") || "all";
+
+  const filteredProducts =
+    activeCategory && activeCategory !== "all"
+      ? products.filter((product) => {
+          if (!product.category) return true;
+          const catSlug = product.category.toLowerCase().replace(/\s+/g, "-");
+          return catSlug === activeCategory.toLowerCase();
+        })
+      : products;
 
   const options = [
     { label: "Latest Products", value: "0" },
@@ -19,10 +32,15 @@ const Shop = ({ products }: { products: Product[] }) => {
   return (
     <>
       <Breadcrumb
-        title={"All Products"}
+        title={
+          activeCategory && activeCategory !== "all"
+            ? `Category: ${activeCategory.replace("-", " ")}`
+            : "All Products"
+        }
         pages={["shop"]}
       />
-      <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">
+      <CategoryBar />
+      <section className="overflow-hidden relative pb-20 pt-5 bg-[#f3f4f6]">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex gap-7.5">
             {/* // <!-- Content Start --> */}
@@ -34,7 +52,7 @@ const Shop = ({ products }: { products: Product[] }) => {
                     <CustomSelect options={options} />
 
                     <p>
-                      Showing <span className="text-dark">{products.length}</span>{" "}
+                      Showing <span className="text-dark">{filteredProducts.length}</span>{" "}
                       Products
                     </p>
                   </div>
@@ -128,7 +146,7 @@ const Shop = ({ products }: { products: Product[] }) => {
                     : "flex flex-col gap-7.5"
                 }`}
               >
-                {products.map((item) =>
+                {filteredProducts.map((item) =>
                   productStyle === "grid" ? (
                     <SingleGridItem item={item} key={item.id} />
                   ) : (

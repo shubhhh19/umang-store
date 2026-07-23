@@ -25,6 +25,7 @@ export function mapSanityProduct(product: SanityProductRecord): Product {
     id: product._id,
     slug: product.slug,
     title: product.title,
+    category: product.category,
     price: product.price,
     discountedPrice: salePrice,
     reviews: 0,
