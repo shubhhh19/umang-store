@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Breadcrumb from "../Common/Breadcrumb";
 
@@ -9,7 +9,7 @@ import CustomSelect from "./CustomSelect";
 import CategoryBar from "../Home/CategoryBar";
 import { Product } from "@/types/product";
 
-const Shop = ({ products }: { products: Product[] }) => {
+const ShopContent = ({ products }: { products: Product[] }) => {
   const [productStyle, setProductStyle] = useState("grid");
   const searchParams = useSearchParams();
   const activeCategory = searchParams?.get("category") || "all";
@@ -279,6 +279,14 @@ const Shop = ({ products }: { products: Product[] }) => {
         </div>
       </section>
     </>
+  );
+};
+
+const Shop = ({ products }: { products: Product[] }) => {
+  return (
+    <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+      <ShopContent products={products} />
+    </Suspense>
   );
 };
 

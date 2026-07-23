@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -16,7 +16,7 @@ interface CategoryBarProps {
   onSelectCategory?: (slug: string) => void;
 }
 
-const CategoryBar: React.FC<CategoryBarProps> = ({
+const CategoryBarContent: React.FC<CategoryBarProps> = ({
   activeCategory,
   onSelectCategory,
 }) => {
@@ -96,6 +96,14 @@ const CategoryBar: React.FC<CategoryBarProps> = ({
         </div>
       </div>
     </div>
+  );
+};
+
+const CategoryBar: React.FC<CategoryBarProps> = (props) => {
+  return (
+    <Suspense fallback={<div className="h-16 my-6 bg-white border-y border-gray-2" />}>
+      <CategoryBarContent {...props} />
+    </Suspense>
   );
 };
 
