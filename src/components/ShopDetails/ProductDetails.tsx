@@ -59,9 +59,16 @@ const ProductDetails = ({ product }: { product: Product }) => {
                   {product.title}
                 </h1>
 
-                <p className="font-medium text-2xl text-dark mb-6">
-                  {formatInr(product.price)}
-                </p>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="font-semibold text-2xl text-dark">
+                    {formatInr(product.discountedPrice)}
+                  </span>
+                  {product.price > product.discountedPrice && (
+                    <span className="font-medium text-xl text-dark-4 line-through">
+                      {formatInr(product.price)}
+                    </span>
+                  )}
+                </div>
 
                 <p className="text-dark-4 mb-6">
                   {product.inStock === false ? "Out of stock" : "In stock"}
