@@ -4,10 +4,16 @@ import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import AddressModal from "./AddressModal";
 import Orders from "../Orders";
+import { useSession, signOut } from "next-auth/react";
 
 const MyAccount = () => {
+  const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [addressModal, setAddressModal] = useState(false);
+
+  const userName = session?.user?.name || "Customer";
+  const userEmail = session?.user?.email || "";
+  const userAvatar = session?.user?.image || "/images/users/user-04.jpg";
 
   const openAddressModal = () => {
     setAddressModal(true);
@@ -30,7 +36,7 @@ const MyAccount = () => {
                 <div className="hidden lg:flex flex-wrap items-center gap-5 py-6 px-4 sm:px-7.5 xl:px-9 border-r xl:border-r-0 xl:border-b border-gray-3">
                   <div className="max-w-[64px] w-full h-16 rounded-full overflow-hidden">
                     <Image
-                      src="/images/users/user-04.jpg"
+                      src={userAvatar}
                       alt="user"
                       width={64}
                       height={64}
@@ -39,9 +45,9 @@ const MyAccount = () => {
 
                   <div>
                     <p className="font-medium text-dark mb-0.5">
-                      James Septimus
+                      {userName}
                     </p>
-                    <p className="text-custom-xs">Member Since Sep 2020</p>
+                    {userEmail && <p className="text-custom-xs">{userEmail}</p>}
                   </div>
                 </div>
 
@@ -219,7 +225,7 @@ const MyAccount = () => {
                     </button>
 
                     <button
-                      onClick={() => setActiveTab("logout")}
+                      onClick={() => signOut({ callbackUrl: "/" })}
                       className={`flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duration-200 hover:bg-blue hover:text-white ${
                         activeTab === "logout"
                           ? "text-white bg-blue"
@@ -261,13 +267,14 @@ const MyAccount = () => {
               }`}
             >
               <p className="text-dark">
-                Hello Annie (not Annie?
-                <a
-                  href="#"
-                  className="text-red ease-out duration-200 hover:underline"
+                Hello {userName} (not {userName}?
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-red ease-out duration-200 hover:underline ml-1"
                 >
                   Log Out
-                </a>
+                </button>
                 )
               </p>
 
@@ -357,7 +364,7 @@ const MyAccount = () => {
                           fill=""
                         />
                       </svg>
-                      Name: James Septimus
+                      Name: {userName}
                     </p>
 
                     <p className="flex items-center gap-2.5 text-custom-sm">
@@ -376,7 +383,7 @@ const MyAccount = () => {
                           fill=""
                         />
                       </svg>
-                      Email: jamse@example.com
+                      Email: {userEmail || "Not provided"}
                     </p>
 
                     <p className="flex items-center gap-2.5 text-custom-sm">

@@ -18,15 +18,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
   }
 
-  // ── Mock mode (no credentials) ────────────────────────────────────────────
   if (!keyId || !keySecret) {
-    return NextResponse.json({
-      mock: true,
-      orderId: `mock_order_${Date.now()}`,
-      amount: Math.round(amount * 100),
-      currency: "INR",
-      keyId: "mock_key",
-    });
+    return NextResponse.json(
+      { error: "Razorpay payment gateway credentials are not configured" },
+      { status: 500 }
+    );
   }
 
   // ── Live mode ─────────────────────────────────────────────────────────────
